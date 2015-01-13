@@ -6,12 +6,10 @@ module.exports = function (){
         if(type == "object") {
             for (var key in object) {
                 if(found === false) {
-                    // process.stdout.write("{" + key + ": ");
                     this.nice(object[key], query);
                 }
             }
         } else {
-            // process.stdout.write(object + "} ");
             if(object === query) {
                 found = true;
             }

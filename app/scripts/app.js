@@ -9,6 +9,11 @@ var React = window.React = require('react'),
     require('codemirror/mode/javascript/javascript.js');
 
 var Rudolph = React.createClass({
+  getInitialState: function() {
+    return {
+      userInput: '//write a for loop'
+    };
+  },
   componentDidMount: function() {
     var myTextArea = document.getElementById("code"),
         myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
@@ -19,7 +24,7 @@ var Rudolph = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
   },
-  handleClick: function() {
+  handleSubmitClick: function() {
     setTimeout(function(){ 
       var text = document.getElementById("code").value,
           ast = acorn.parse(text),
@@ -35,10 +40,10 @@ var Rudolph = React.createClass({
       <div>
         <h3>TEST</h3>
           <form onSubmit={this.handleSubmit}>
-            <textarea id="code" >
+            <textarea id="code" value={this.state.userInput}>
+              {this.state.userInput}
             </textarea>
-            <input onClick={this.handleClick} type="submit" value="submit" />
-            <input type="reset" value="reset" />
+            <input onClick={this.handleSubmitClick} type="submit" value="submit"/>
           </form>
       </div>
     );

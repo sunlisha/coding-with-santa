@@ -10,7 +10,7 @@ module.exports = function (){
                     this.traverse(object[key], query);
                 }      
                 else {
-                    if (object.type === query) {
+                    if (object.type === query) { //currently can only check for based on type key
                         subtree = object;
                     }
                     break;
@@ -45,6 +45,7 @@ module.exports = function (){
     SantaClaus.chimney = function(object, queryObject){
         var foundArray = [],
             subtree = object,
+            correctStructure = true,
             i;
   
         for (i = 0; i < queryObject.length; i++) {
@@ -52,10 +53,18 @@ module.exports = function (){
             returnArray = this.traverse(subtree, queryObject[i]);
             foundArray[i] = returnArray[0];
             subtree = returnArray[1];
+            found = false; //refactor so that we don't have to change touch global variables
+            correctStructure = foundArray[i] && correctStructure;
         }
 
-        console.log(foundArray);
-        console.log(subtree);
+        if (correctStructure) {
+            console.log("Good job!");
+        }
+        else {
+            console.log("You should have a " + queryObject[1] + " inside of a " + queryObject[0]);
+        }
+
+
     }
     // SantaClaus.present = function() {
 

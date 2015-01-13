@@ -28,7 +28,7 @@ module.exports = React.createClass({
       var text = document.getElementById("code3").value,
           ast = acorn.parse(text);
 
-      SantaClaus().chimney(ast, ["ForStatement"]);
+      SantaClaus().chimney(ast, ["ForStatement","IfStatement"]);
 
       // console.log(text);
       // console.log(ast);

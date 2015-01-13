@@ -1,17 +1,21 @@
 module.exports = function (){
-    var SantaClaus = {},
-        found = false,
-        subtree = {};
+    var SantaClaus = {
+            found: false,
+            subtree: {}
+        };
+    SantaClaus.resetFound = function() {
+        this.found = false;
+    }
     SantaClaus.traverse = function(object, query){
         var type = typeof object;
         if(type == "object") {
             for (var key in object) {
-                if (!found){
+                if (!this.found){
                     this.traverse(object[key], query);
                 }      
                 else {
                     if (object.type === query) { //currently can only check for based on type key
-                        subtree = object;
+                        this.subtree = object;
                     }
                     break;
                 }
@@ -19,12 +23,13 @@ module.exports = function (){
         } 
         else {
             if(object === query) {
-                found = true;
+                this.found = true;
             }
         }
-        return [found, subtree];
+        return [this.found, this.subtree];
     }
     SantaClaus.nice = function(object, query){
+        this.resetFound();
         var found = this.traverse(object, query)[0];
         if(found){
             console.log("Good job!");
@@ -34,6 +39,7 @@ module.exports = function (){
         }
     }
     SantaClaus.naughty = function(object, query){
+        this.resetFound();
         var found = this.traverse(object, query)[0];
         if (found) {
             console.log("This program should not have a " + query);
@@ -43,6 +49,7 @@ module.exports = function (){
         }
     }
     SantaClaus.chimney = function(object, queryObject){
+        this.resetFound();
         var foundArray = [],
             subtree = object,
             correctStructure = true,
@@ -53,7 +60,7 @@ module.exports = function (){
             returnArray = this.traverse(subtree, queryObject[i]);
             foundArray[i] = returnArray[0];
             subtree = returnArray[1];
-            found = false; //refactor so that we don't have to change touch global variables
+            this.resetFound();
             correctStructure = foundArray[i] && correctStructure;
         }
 
@@ -61,7 +68,7 @@ module.exports = function (){
             console.log("Good job!");
         }
         else {
-            console.log("You should have a " + queryObject[1] + " inside of a " + queryObject[0]);
+            console.log("You should have a " + queryObject[1] + " inside of a " + queryObject[0]);//limited structural nesting
         }
 
 

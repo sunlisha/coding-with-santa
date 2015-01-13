@@ -11,10 +11,10 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream'),
     
-    sourceFile = './app/scripts/app.js',
+    sourceFile = './app/scripts/test.js',
     
     destFolder = './dist/scripts',
-    destFileName = 'app.js';
+    destFileName = 'test.js';
 
 
 // Styles

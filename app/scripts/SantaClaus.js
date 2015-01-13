@@ -1,6 +1,7 @@
 module.exports = function (){
     var SantaClaus = {},
-        found = false;
+        found = false,
+        subtree = {};
     SantaClaus.traverse = function(object, query){
         var type = typeof object;
         if(type == "object") {
@@ -10,7 +11,7 @@ module.exports = function (){
                 }      
                 else {
                     if (object.type === query) {
-                        console.log(object);
+                        subtree = object;
                     }
                     break;
                 }
@@ -21,10 +22,10 @@ module.exports = function (){
                 found = true;
             }
         }
-        return found;
+        return [found, subtree];
     }
     SantaClaus.nice = function(object, query){
-        var found = this.traverse(object, query);
+        var found = this.traverse(object, query)[0];
         if(found){
             console.log("Good job!");
         }
@@ -33,7 +34,7 @@ module.exports = function (){
         }
     }
     SantaClaus.naughty = function(object, query){
-        var found = this.traverse(object, query);
+        var found = this.traverse(object, query)[0];
         if (found) {
             console.log("This program should not have a " + query);
         }
@@ -41,35 +42,16 @@ module.exports = function (){
             console.log("Good job!");
         }
     }
-    // SantaClaus.chimneyTraverse = function(object, query, found) {
-    //     var type = typeof object;
-
-    //     if(type == "object") {
-    //         for (var key in object) {
-    //                 subtree = object[key];
-    //             if(!found) {
-    //                 this.chimneyTraverse(subtree, query, found);
-    //             }
-    //         }
-    //     } 
-    //     else {
-    //         if(object === query) {
-    //             found = true;
-    //         }
-    //     }
-        
-    //     return subtree;
-    // }
     SantaClaus.chimney = function(object, queryObject){
         var foundArray = [],
             subtree = object,
             i;
-
-        //initialize found array     
-        for (i = 0; i < 1; i++) {
+  
+        for (i = 0; i < queryObject.length; i++) {
             foundArray[i] = false; 
-            // subtree = this.chimneyTraverse(subtree, queryObject[i], foundArray[i]);
-            foundArray[i] = this.traverse(subtree, queryObject[i]);
+            returnArray = this.traverse(subtree, queryObject[i]);
+            foundArray[i] = returnArray[0];
+            subtree = returnArray[1];
         }
 
         console.log(foundArray);

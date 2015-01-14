@@ -32,20 +32,20 @@ module.exports = function (){
         this.resetFound();
         var found = this.traverse(object, query)[0];
         if(found){
-            console.log("Good job!");
+            return "Good job!";
         }
         else {
-            console.log("This program should include a " + query);
+            return "This program should include a " + query;
         }
     }
     SantaClaus.naughty = function(object, query){
         this.resetFound();
         var found = this.traverse(object, query)[0];
         if (found) {
-            console.log("This program should not have a " + query);
+            return "This program should not have a " + query;
         }
         else {
-            console.log("Good job!");
+            return "Good job!";
         }
     }
     SantaClaus.chimney = function(object, queryObject){
@@ -65,10 +65,10 @@ module.exports = function (){
         }
 
         if (correctStructure) {
-            console.log("Good job!");
+            return "Good job!";
         }
         else {
-            console.log("You should have a " + queryObject[1] + " inside of a " + queryObject[0]);//limited structural nesting
+            return "You should have a " + queryObject[1] + " inside of a " + queryObject[0];//limited structural nesting
         }
 
 

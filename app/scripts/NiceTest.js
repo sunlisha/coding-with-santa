@@ -10,7 +10,8 @@ var React = window.React = require('react'),
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      userInput: '//write a for loop'
+      userInput: '//write a for loop',
+      santaOutput: ''
     };
   },
   componentDidMount: function() {
@@ -19,29 +20,41 @@ module.exports = React.createClass({
           lineNumbers: true,
           theme: "solarized dark"
         });
+    myCodeMirror.setSize(600, 300);
   },
   handleSubmit: function(e) {
     e.preventDefault();
   },
   handleSubmitClick: function() {
+    var that = this;
     setTimeout(function(){ 
       var text = document.getElementById("code").value,
           ast = acorn.parse(text);
 
-      SantaClaus().nice(ast, "ForStatement");
+      var output = SantaClaus().nice(ast, "ForStatement");
 
+      that.setState({
+        santaOutput: output
+      });
       // console.log(text);
       // console.log(ast);
     }, 10);
   },
   render: function() {
+    var niceTestStyle = {
+          "padding": "25px"
+        },
+        outputStyle = {
+          "fontSize" : "12px"
+        };
     return (
-      <div>
-        <h3>White List Test</h3>
+      <div style={niceTestStyle}>
+        <p>White List Test</p>
           <form onSubmit={this.handleSubmit}>
             <textarea id="code" defaultValue={this.state.userInput}>
             </textarea>
-            <input onClick={this.handleSubmitClick} type="submit" value="submit"/>
+            <p style={outputStyle}>{this.state.santaOutput}</p>
+            <input onClick={this.handleSubmitClick} type="submit" value="SUBMIT"/>
           </form>
       </div>
     );
